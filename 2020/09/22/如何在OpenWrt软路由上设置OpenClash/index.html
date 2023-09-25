@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>如何在OpenWrt软路由上设置OpenClash | Fs Page</title><meta name="author" content="Junyuan Wang"><meta name="copyright" content="Junyuan Wang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="注：这篇文章可能违反了中国大陆的法律规定。如果您在中国大陆，请立刻离开。请勿转载和传播，否则可能受到中国大陆法律的处罚或制裁。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在OpenWrt软路由上设置OpenClash">
+<meta property="og:url" content="https://page.frankutils.xyz/2020/09/22/%E5%A6%82%E4%BD%95%E5%9C%A8OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1%E4%B8%8A%E8%AE%BE%E7%BD%AEOpenClash/index.html">
+<meta property="og:site_name" content="Fs Page">
+<meta property="og:description" content="注：这篇文章可能违反了中国大陆的法律规定。如果您在中国大陆，请立刻离开。请勿转载和传播，否则可能受到中国大陆法律的处罚或制裁。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/frank2002/blogImg/main/page/head.jpg">
+<meta property="article:published_time" content="2020-09-22T14:03:46.000Z">
+<meta property="article:modified_time" content="2023-09-25T07:23:51.794Z">
+<meta property="article:author" content="Junyuan Wang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/frank2002/blogImg/main/page/head.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/frank2002/blogImg/main/page/1_seo-application-like-thumb.svg"><link rel="canonical" href="https://page.frankutils.xyz/2020/09/22/%E5%A6%82%E4%BD%95%E5%9C%A8OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1%E4%B8%8A%E8%AE%BE%E7%BD%AEOpenClash/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '如何在OpenWrt软路由上设置OpenClash',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-25 07:23:51'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/frank2002/blogImg/main/page/top_img.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Fs Page"><span class="site-name">Fs Page</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">如何在OpenWrt软路由上设置OpenClash</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-09-22T14:03:46.000Z" title="Created 2020-09-22 14:03:46">2020-09-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-25T07:23:51.794Z" title="Updated 2023-09-25 07:23:51">2023-09-25</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>5min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="如何在OpenWrt软路由上设置OpenClash"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h2><p><strong><em>这篇文章可能违反了中国大陆的法律规定。如果您在中国大陆，请立刻离开。请勿转载和传播，否则可能受到中国大陆法律的处罚或制裁。</em></strong></p>
+<p><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/ff5d8a6cc97d3d129269d051fda69927.jpg" alt=""></p>
+<h2 id="杂话"><a href="#杂话" class="headerlink" title="杂话"></a>杂话</h2><p>因为已经开学了好久，最近都没什么时间除草，中间还因为一次手误，导致博客丢了几篇文章（备份系统不知道为什么失效了），很烦！所以最近对博客系统进行了一次更改，增加多层备份，并且简化了网络结构，使其更加稳定。</p>
+<p><img src="https://blogfrankpic.oss-cn-shenzhen.aliyuncs.com/usr/uploads/2020/09/2656002551.png" alt="OpenClash"></p>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>最近发现SSRP+这类的软路由代理插件有一定的局限性，不能做到很强大的分流，无法进行无缝的故障转移，对于我这种需要通过梯子进行国际考试的考生来说十分痛苦。随即想到了使用OpenClash。Clash相对于大多数人都不会陌生，CFW，ClashX，ClashR等等终端上的软件也是耳熟能详，但是很少人接触过OpenClash。这篇文章主要讲OpenClash该如何设置，并且如何避开一些坑。</p>
+<p><em>因为OpenClash还处于开发活跃阶段，本文存在一定的时效性，如果时间过长，可能导致本文的内容失效！</em></p>
+<h2 id="固件准备"><a href="#固件准备" class="headerlink" title="固件准备"></a>固件准备</h2><p>首先需要准备一个带有OpenClash的固件，这里不推荐自己使用OPKG进行安装，依赖等问题很难办，而且谁也不知道你用的什么上古版本的OpenWrt，所以说，随机编译较为稳定。<del>这里会提供一个Github Actions的自动编译。固件含有OpenClash，需要可以自取。因为是自动编译，并没有每一个都进行测试，所以并不能保证100%的稳定性</del></p>
+<h2 id="配置文件准备"><a href="#配置文件准备" class="headerlink" title="配置文件准备"></a>配置文件准备</h2><p>熟悉Clash的朋友们应该知道，使用Clash必须要有一个yaml的配置文件。Clash无法直接使用Vmess，SSR，SS，Trojan的分享URL，需要第三方工具进行转化，并且，由于我们需要强大的分流规则，所以这里推荐ACL4SSR的规则转换</p>
+<p><a target="_blank" rel="noopener" href="https://acl4ssr-sub.github.io/">ACL4SSR 在线订阅转换</a></p>
+<p>当然，还有另外一种方法，OpenClash提供了配置文件生成插件，可以自主进行规则的设置和节点的分组，但是因为我使用的ACL4SSR，没有使用OpenClash自带的，这里就不再赘述了。</p>
+<p><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/3723353351.png" alt=""></p>
+<h2 id="开始设置"><a href="#开始设置" class="headerlink" title="开始设置"></a>开始设置</h2><p>首先在<code>配置文件订阅</code>中添加配置文件，然后设置好自动更新，可以添加多个，然后在<code>配置文件管理</code>中选择需要使用的配置文件</p>
+<p><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/1285836377.png" alt=""></p>
+<h3 id="更新内核"><a href="#更新内核" class="headerlink" title="更新内核"></a>更新内核</h3><p>进入<code>常规设置</code>选择适配的CPU架构。</p>
+<p><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/2864548368.png" alt=""></p>
+<p>进入<code>版本更新</code>，找到一键更新，进行自动更新。</p>
+<p>如果自动更新失败，请手动下载内核文件，并且传入指定目录。OpenClash的页面写的很清楚，这里没必要细说。重启路由器。</p>
+<h3 id="模式设置"><a href="#模式设置" class="headerlink" title="模式设置"></a>模式设置</h3><p>进入<code>全局设置</code>，然后看见有模式选择，默认是Redir-Host模式。这里推荐是Redir-Host模式，这个模式更加稳定，性能更好，但是更新内核文件会出现问题，DNS请求会更慢。</p>
+<p>底下有一个黄色按钮切换到<code>Fake-IP模式</code>。Fake-ip能够让用户获得更加快速的DNS请求，并且可以完美更新内核文件。但是缺点很明显，DDNS会获取到错误IP，性能较差。</p>
+<p>这里不推荐使用TUN，会导致吞吐量极具降低！</p>
+<p>默认选择<code>Rule</code>模式，推荐启用<code>大陆IP绕过模式</code>，减少内存和CPU占用。</p>
+<p>UDP模式按照自己需求来开。</p>
+<h3 id="DNS设置"><a href="#DNS设置" class="headerlink" title="DNS设置"></a>DNS设置</h3><p><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/1223897652.png" alt=""></p>
+<p>本地DNS劫持请开启，保证正常功能的使用。如果有上游DNS，请按照提示进行设置</p>
+<p>IPV6 DNS请关闭，OpenClash对于IPV6支持较差，不建议开启。</p>
+<p>禁止DNSmasq缓存建议开启，有时错误的缓存会导致终端无法上网。</p>
+<p>高级设置按需进行设置，不一定要开。</p>
+<h3 id="其他设置"><a href="#其他设置" class="headerlink" title="其他设置"></a>其他设置</h3><p>GeoIP，大陆白名单，第三方规则 库都建议进行定时升级，确保最好的网络访问状态。</p>
+<p>在<code>网络--DHCP/DNS</code>中查看<code>DNS转发</code>是否是：127.0.0.1#7874，如果不是，请修改。关闭DNS v6的解析。</p>
+<p>如果使用TUN模式，在<code>网络--防火墙</code>中，间VPN接口的规则设置为全部接受。</p>
+<p>如果发现性能跟不上，网速跑不满，请关闭：流控类软件（Qos，SQM等），BBR，SFE，Flowoffload之类的加速软件。可以一个一个关闭排除问题，不用一下子全部关掉。建议Turbo ACC中关闭DNS加速。</p>
+<p><strong>在主界面点击<code>启动OpenClash</code></strong></p>
+<h2 id="Clash设置"><a href="#Clash设置" class="headerlink" title="Clash设置"></a>Clash设置</h2><p>回到OpenClash主页面，点击Yacd后面的<code>打开控制面板</code></p>
+<p><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/2510127460.png" alt=""></p>
+<p>这里推荐Yacd面板，比较稳定。DashBoard有时候会连接显示不全，并且跳出验证项。请勿两个同时使用，配置文件不能实时互通。</p>
+<h3 id="策略设置"><a href="#策略设置" class="headerlink" title="策略设置"></a>策略设置</h3><p><strong>熟悉Clash的朋友们这里就不用看了，和软件版的Clash设置基本一样。</strong></p>
+<p>点击<code>Proxies</code></p>
+<p>将节点选择切换为自动选择（最稳定最快）</p>
+<p><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/2432732249.png" alt=""></p>
+<p><em>这样理论上就能进行畅快的网络遨游了。</em></p>
+<p>也可以选择继续设置：</p>
+<p>将每种Selector（后面都会有显示，如下图所示）选择自己想要的模式，达到最适合自己的分流目的。</p>
+<p><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/2764898196.png" alt=""></p>
+<p>漏网之鱼和Global两种模式推荐节点选择或者Direct（直连）</p>
+<p>节点选择：不适配任何规则的流量通过代理</p>
+<p>Direct：不适配任何规则的流量不通过代理，直连。</p>
+<p>这里请按照自己的需求选择。’</p>
+<h2 id="正式上网"><a href="#正式上网" class="headerlink" title="正式上网"></a>正式上网</h2><p>如果一步不错的做到这里，应该就可以正常访问世界范围内的公网了。</p>
+<p>可以对本机进行测速，或者进入Yacd面板查看Connections，检查是否连上。如果出现问题，请看下文。</p>
+<h2 id="其他设置-1"><a href="#其他设置-1" class="headerlink" title="其他设置"></a>其他设置</h2><h3 id="进行调试"><a href="#进行调试" class="headerlink" title="进行调试"></a>进行调试</h3><p>OpenClash 有两个显示日志文件的地方，两个地方显示的日志文件不同。</p>
+<p>在<code>全局设置-调试日志-生成日志</code>后，可以检查到OpenClash和路由器本身的一些设置。检查问题并且进行更改。</p>
+<p>在OpenClash最上面一条的任务栏上有一个<code>运行日志</code>，这里主要显示OpenClash的运行状态和问题。</p>
+<p>如果发现OpenClash正常启动了，却无法上网，请检查调试日志。如果OpenClash本身出错，请检查运行日志。如果需要咨询，请附上日志文件，并详细描述问题，否则自动忽略。</p>
+<h3 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h3><p>使用的过程中必不可少的会发现有些规则并不是我们想要的，我们就需要自定义我们的规则了。</p>
+<ol>
+<li>DNS解析问题：如果想强制使某个域名使用国内ＤＮＳ解析，在<code>全局设置－－ＤＮＳ设置－－高级设置</code>中启用此功能。并且在下面根据示例进行填写。</li>
+<li>自定义适用规则：进入<code>全局设置－－规则设置</code>中启用<code>自定义规则</code>。在下方自定义规则中，按照示例，添加适用的规则<img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/2400129481.png" alt=""></li>
+<li>ＤＮＳ劫持：拉到最下面，修改自定义ＨＯＳＴＳ文件。</li>
+</ol>
+<h3 id="完成设置"><a href="#完成设置" class="headerlink" title="完成设置"></a>完成设置</h3><p>到这里应该所有设置就完成了，如果需要询问，请发邮件至博主邮箱，或者通过自己的方式联系到我。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://page.frankutils.xyz">Junyuan Wang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://page.frankutils.xyz/2020/09/22/%E5%A6%82%E4%BD%95%E5%9C%A8OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1%E4%B8%8A%E8%AE%BE%E7%BD%AEOpenClash/">https://page.frankutils.xyz/2020/09/22/%E5%A6%82%E4%BD%95%E5%9C%A8OpenWrt%E8%BD%AF%E8%B7%AF%E7%94%B1%E4%B8%8A%E8%AE%BE%E7%BD%AEOpenClash/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/frank2002/blogImg/main/page/head.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/25/%E5%85%B3%E4%BA%8E%E7%BD%97%E6%8A%80%E5%94%AE%E5%90%8E%E7%9A%84%E4%BD%93%E9%AA%8C/" title="关于罗技售后的体验"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">关于罗技售后的体验</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Z-file%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%9B%98%E7%9B%AE%E5%BD%95/" title="如何使用Z-file搭建个人网盘目录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">如何使用Z-file搭建个人网盘目录</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/frank2002/blogImg/main/page/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Junyuan Wang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/frank2002"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome to my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">注：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%82%E8%AF%9D"><span class="toc-number">2.</span> <span class="toc-text">杂话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%AD%90"><span class="toc-number">3.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BA%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">4.</span> <span class="toc-text">固件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">5.</span> <span class="toc-text">配置文件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%AE%BE%E7%BD%AE"><span class="toc-number">6.</span> <span class="toc-text">开始设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E5%86%85%E6%A0%B8"><span class="toc-number">6.1.</span> <span class="toc-text">更新内核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E8%AE%BE%E7%BD%AE"><span class="toc-number">6.2.</span> <span class="toc-text">模式设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS%E8%AE%BE%E7%BD%AE"><span class="toc-number">6.3.</span> <span class="toc-text">DNS设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%AE%BE%E7%BD%AE"><span class="toc-number">6.4.</span> <span class="toc-text">其他设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">Clash设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.1.</span> <span class="toc-text">策略设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E4%B8%8A%E7%BD%91"><span class="toc-number">8.</span> <span class="toc-text">正式上网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%AE%BE%E7%BD%AE-1"><span class="toc-number">9.</span> <span class="toc-text">其他设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E8%B0%83%E8%AF%95"><span class="toc-number">9.1.</span> <span class="toc-text">进行调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="toc-number">9.2.</span> <span class="toc-text">自定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%88%90%E8%AE%BE%E7%BD%AE"><span class="toc-number">9.3.</span> <span class="toc-text">完成设置</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/23/%E4%BD%BF%E7%94%A8Docker%E6%89%93%E5%8C%85VSCode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" title="使用Docker打包VSCode开发环境">使用Docker打包VSCode开发环境</a><time datetime="2023-09-23T23:35:16.000Z" title="Created 2023-09-23 23:35:16">2023-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/04/13/Windows%E5%AE%89%E8%A3%85Tensorflow%E4%BB%A5%E4%BD%BF%E7%94%A8GPU%E8%AE%A1%E7%AE%97/" title="Windows安装Tensorflow以使用GPU计算">Windows安装Tensorflow以使用GPU计算</a><time datetime="2023-04-13T23:50:45.000Z" title="Created 2023-04-13 23:50:45">2023-04-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/04/11/anaconda/" title="anaconda frequent commands">anaconda frequent commands</a><time datetime="2023-04-11T11:10:21.000Z" title="Created 2023-04-11 11:10:21">2023-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/04/10/announcement/" title="Announcement / 须知">Announcement / 须知</a><time datetime="2023-04-10T21:00:31.000Z" title="Created 2023-04-10 21:00:31">2023-04-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/04/10/commands/" title="Hexo frequent commands">Hexo frequent commands</a><time datetime="2023-04-10T17:57:01.000Z" title="Created 2023-04-10 17:57:01">2023-04-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/frank2002/blogImg/main/page/top_img.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Junyuan Wang</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: '2d1591a8dad3d49f8997',
+      clientSecret: 'ebda5bd79f02da2d81a97a035a1293e0c47e484e',
+      repo: 'frank2002.github.io',
+      owner: 'frank2002',
+      admin: ['frank2002'],
+      id: '858a64947ddc0f66dee5281f1e69a846',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.textContent= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
